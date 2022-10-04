@@ -1,13 +1,120 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  position: relative;
+}
+
+.container {
+  width: 92%;
+  margin: 0 auto;
+}
+
+/* Navbar */
+.__nav{
+  background-color: transparent;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+}
+
+.nav__button {
+  margin-left: 2rem;
+}
+
+.nav__item .nav__button {
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  margin-left: 2rem;
+}
+
+
+/* Jumbotron */
+.jumbotron {
+  margin-top: -75px;
+  position: relative;
+  margin-bottom: 5rem;
+}
+
+.bg__jumbotron {
+  background-color: black;
+}
+
+.jumbotron__detail {
+  margin-top: -75px;
+  position: relative;
+}
+
+.detail__text  {
+  position: absolute;
+  left: 75px;
+  top: 14rem;
+  color: white;
+  width: 50%;
+  line-height: 30px;
+}
+
+.bg-carousel {
+  height: 100vh;
+  background-color: black;
+}
+
+/* Card */
+.movie__card {
+  margin-bottom: 5rem;
+}
+
+.img__card {
+  border-radius: 0.75rem;
+  display: block;
+  overflow: hidden;
+}
+
+.card__info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.all__movies {
+  margin-top: 0.5rem;
+  color: #f33f3f;
+}
+
+.all__movies:hover {
+  color: #fa5f5f;
+  cursor: pointer;
+}
+
+.description {
+  position: absolute;
+  border-radius: 0.75rem;
+  bottom: 0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  padding: 16rem 15px 0 15px;
+  font-size: 18px;
+  color: #fff;
+  background-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+  opacity: 0;
+}
+
+.description:hover {
+  opacity: 1;
+}
+
+.description > * {
+  transform: translateY(30px);
+  transition: transform 0.4s;
+}
+
+.description:hover > * {
+  transform: translateY(0);
 }
