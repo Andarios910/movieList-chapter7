@@ -15,7 +15,6 @@ export default function CardMovies({ movies }) {
                 <Swiper
                     slidesPerView={4}
                     spaceBetween={30}
-                    showsPagination={false}
                     className="mySwiper"
                 >
                     {

@@ -11,16 +11,14 @@ export default function ButtonCategories({ categories }) {
                 <Swiper
                     slidesPerView={6}
                     spaceBetween={5}
-                    showsPagination={false}
                     className="mySwiper"
                 >
                 {
                     categories.map(genre => (
-                        <SwiperSlide>
+                        <SwiperSlide key={genre.id} >
                             <Button 
                                 className='btn__category' 
                                 variant='outline-danger' 
-                                key={genre.id} 
                                 onClick={() => navigate(`/genre/${genre.id}`)}
                             >
                                 {genre.name}

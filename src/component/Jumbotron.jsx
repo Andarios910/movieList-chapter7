@@ -29,7 +29,6 @@ export default function Jumbotron({movies}) {
                                 src={`https://image.tmdb.org/t/p/original${items.backdrop_path}`}
                                 alt="First slide"
                                 style={{
-                                    backgroundSize: 'cover',
                                     height: '100vh',
                                 }}
                             />
