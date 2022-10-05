@@ -1,10 +1,19 @@
-import React from 'react'
-
+import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Navbar, Button, Nav, Container } from 'react-bootstrap';
 
 import Jumbotron from './Jumbotron';
 
 export default function NavbarMovies({movies}) {
+    const [query, setQuery] = useState('');
+    const navigate = useNavigate();
+
+    console.log(query)
+
+    const handleSubmitSearch = () => {
+        navigate(`/search/${query}`)
+    }
+
     return (
         <>  
             <Navbar className='__nav' collapseOnSelect expand="lg">
@@ -15,6 +24,16 @@ export default function NavbarMovies({movies}) {
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                             <Navbar.Collapse id="responsive-navbar-nav">
                                 <Nav className="ms-auto">
+                                    <form onSubmit={handleSubmitSearch}>
+                                        <div className='search__bar'>
+                                            <input 
+                                                type='text'
+                                                placeholder='Search'
+                                                onChange={(e) => setQuery(e.target.value)}
+                                            />
+                                            <Button type='submit' >Search</Button>
+                                        </div>
+                                    </form>
                                     <Button className='nav__button' variant='outline-danger' style={{ borderRadius: '2rem', padding: '0.5rem 1rem'}} >Login</Button>
                                     <Button className='nav__button' variant='danger' style={{ borderRadius: '2rem' }} >Register</Button>
                                 </Nav>

@@ -11,10 +11,6 @@ export default function CardMovies({ movies }) {
 
     return (
         <div className='movie__card '>
-            <div className='container card__info'>
-                <h2 style={{marginBottom: '2rem'}}>Popular Movie</h2>
-                <h5 className='all__movies'>See All Movies</h5>
-            </div>
             <Container className='container'>
                 <Swiper
                     slidesPerView={4}

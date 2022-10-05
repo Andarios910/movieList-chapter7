@@ -30,7 +30,7 @@ export default function Jumbotron({movies}) {
                                 alt="First slide"
                                 style={{
                                     backgroundSize: 'cover',
-                                    height: '600px',
+                                    height: '100vh',
                                 }}
                             />
                         </Carousel.Item>

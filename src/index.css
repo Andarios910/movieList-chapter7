@@ -35,6 +35,22 @@ body {
   margin-left: 2rem;
 }
 
+.search__bar input {
+  margin-right: 10rem;
+  width: 25rem;
+  padding: 0.5rem;
+  border-radius: 2rem;
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+::placeholder {
+  color: white;
+  padding-left: 5px;
+}
+
 
 /* Jumbotron */
 .jumbotron {
@@ -118,3 +134,10 @@ body {
 .description:hover > * {
   transform: translateY(0);
 }
+
+.btn__category {
+  width: 10rem;
+  border-radius: 2rem;
+  padding: 0.5rem 0;
+}
+
