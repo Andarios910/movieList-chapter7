@@ -40,7 +40,7 @@ export default function DetailPage() {
     useEffect(() => {
         getMovie();
         getCast();
-    }, [])
+    })
 
     return (
         <div>
