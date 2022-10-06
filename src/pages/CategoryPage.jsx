@@ -21,7 +21,7 @@ export default function CategoryPage() {
 
     useEffect(() => {
         getDataCategory();
-    }, [])
+    })
 
     return (
         <div>

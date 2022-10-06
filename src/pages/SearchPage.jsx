@@ -21,7 +21,7 @@ export default function SearchPage() {
 
     useEffect(() => {
         getSearch();
-    }, [])
+    })
 
     return (
         <div>
