@@ -5,9 +5,10 @@ import axios from 'axios';
 import NavbarMovies from '../component/NavbarMovies';
 import JumbotronDetail from '../component/JumbotronDetail';
 import CardMovies from '../component/CardMovies';
+import CardInfo from '../component/CardInfo';
+import FooterMovie from '../component/FooterMovie';
 
 const key = 'a69ac84e7a5ab50d30d9c6e241bda7f6';
-// https://api.themoviedb.org/3/movie/${id}?api_key=${key}&language=en-US
 
 export default function DetailPage() {
     const location = useParams();
@@ -27,26 +28,26 @@ export default function DetailPage() {
     const getCast = async() => {
         try {
             const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${key}&language=en-US`)
-            // console.log(res1.data.cast.slice(0,4));
-            setCast(res.data.cast.slice(0,4))
-            console.log(res.data)
+            const info = res.data.cast.slice(0,10)
+            setCast(info)
         } catch(error) {
             console.error(error);
         }
     }
 
-    console.log(movie)
-
     useEffect(() => {
         getMovie();
         getCast();
-    })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <div>
             <NavbarMovies />
             <JumbotronDetail movies={movie}/>
-            <CardMovies movies={cast}/>
+            <CardInfo title='Cast and Crew Info' check='true' />
+            <CardMovies movies={cast} cardStatus='true' />
+            <FooterMovie />
         </div>
     )
 }

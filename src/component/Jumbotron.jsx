@@ -1,14 +1,12 @@
 import React from 'react'
-// import { UncontrolledCarousel } from 'reactstrap'
 import { Carousel, Button } from 'react-bootstrap'
 
 export default function Jumbotron({movies}) {
-
     return (
             <Carousel className='jumbotron' controls={false}>
                 {
                     movies &&
-                    movies.map(items => (
+                    movies.slice(0,3).map(items => (
                         <Carousel.Item interval={500} key={items.id}> 
                             <div 
                                 style={{
@@ -19,17 +17,19 @@ export default function Jumbotron({movies}) {
                                 }}>
                             </div>
                             <Carousel.Caption className='carousel__text' 
-                                style={{ position: 'absolute', marginBottom: '12rem', textAlign: 'start', marginRight: '10rem'}}>
+                                style={{ textAlign: 'left', left: '5rem', bottom: '6rem'}}>
                                 <h3>{items.title}</h3>
-                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, esse!</p>
-                                <Button>WATCH TRAILLER</Button>
+                                <p>{items.overview}</p>
+                                <Button style={{ backgroundColor: 'red', borderColor: 'red', borderRadius: '2rem', padding: '0.5rem 1rem' }}>WATCH TRAILLER</Button>
                             </Carousel.Caption>
                             <img
-                                className="d-block w-100"
+                                className=""
                                 src={`https://image.tmdb.org/t/p/original${items.backdrop_path}`}
                                 alt="First slide"
                                 style={{
-                                    height: '100vh',
+                                    backgroundSize: 'cover',
+                                    width: '100vw',
+                                    maxHeight: '100vh',
                                 }}
                             />
                         </Carousel.Item>

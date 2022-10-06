@@ -85,6 +85,7 @@ form:hover {
 .jumbotron__detail {
   margin-top: -80px;
   position: relative;
+  margin-bottom: 5rem;
 }
 
 .detail__text  {
@@ -99,6 +100,12 @@ form:hover {
 .bg-carousel {
   height: 100vh;
   background-color: black;
+}
+
+.carousel__text {
+  position: absolute;
+  line-height: 30px;
+  width: 50%;
 }
 
 /* Card */
@@ -152,6 +159,10 @@ form:hover {
 
 .description:hover > * {
   transform: translateY(0);
+}
+
+.description__1 {
+  margin-top: 1.5rem;
 }
 
 .btn__category {

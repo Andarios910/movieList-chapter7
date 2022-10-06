@@ -5,7 +5,7 @@ import { BsSearch } from 'react-icons/bs'
 
 import Jumbotron from './Jumbotron';
 
-export default function NavbarMovies({movies}) {
+export default function NavbarMovies({movies, jumbotron}) {
     const [query, setQuery] = useState('');
     const navigate = useNavigate();
 
@@ -26,14 +26,12 @@ export default function NavbarMovies({movies}) {
                             <Navbar.Collapse id="responsive-navbar-nav">
                                 <Nav className="ms-auto">
                                     <form onSubmit={handleSubmitSearch}>
-                                        {/* <div className='search__bar'> */}
                                             <input
                                                 type='Search'
                                                 placeholder='Search'
                                                 onChange={(e) => setQuery(e.target.value)}
                                             />
                                             <BsSearch className='icon__search' type='submit'/>
-                                        {/* </div> */}
                                     </form>
                                     <Button className='nav__button' variant='outline-danger' style={{ borderRadius: '2rem', padding: '0.5rem 1rem'}} >Login</Button>
                                     <Button className='nav__button' variant='danger' style={{ borderRadius: '2rem' }} >Register</Button>
@@ -41,7 +39,7 @@ export default function NavbarMovies({movies}) {
                             </Navbar.Collapse>
                         </Container>
             </Navbar>
-            <Jumbotron movies={movies}/>
+            <Jumbotron movies={jumbotron}/>
         </>
     )
 }
