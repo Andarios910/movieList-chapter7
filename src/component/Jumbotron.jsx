@@ -13,7 +13,7 @@ export default function Jumbotron({movies}) {
                                 style={{
                                     position: 'absolute', 
                                     width: "100%", 
-                                    height: '600px', 
+                                    height: '100vh', 
                                     backgroundImage: 'linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0))'
                                 }}>
                             </div>
