@@ -23,7 +23,8 @@ export default function AllMovie() {
     }
     useEffect(() => {
         getData();
-    })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const handlePageClick = (data) => {
         setPage(data.selected + 1);

@@ -19,8 +19,6 @@ export default function ButtonCategories({click}) {
         }
     }
 
-    console.log(categories)
-
     useEffect(() => {
         getDataCategory();
     }, [])

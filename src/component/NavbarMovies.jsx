@@ -9,8 +9,6 @@ export default function NavbarMovies({movies, jumbotron}) {
     const [query, setQuery] = useState('');
     const navigate = useNavigate();
 
-    console.log(query)
-
     const handleSubmitSearch = () => {
         navigate(`/search/${query}`)
     }

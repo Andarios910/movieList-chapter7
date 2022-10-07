@@ -9,7 +9,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function CardMovies({ movies, cardStatus }) {
     const navigate = useNavigate();
-    // const [check, setCheck] = useState(cardStatus);
 
     return (
         <div className='movie__card'>
