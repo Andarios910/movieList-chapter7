@@ -1,5 +1,6 @@
 import React from 'react'
 import { Carousel, Button } from 'react-bootstrap'
+import {BsPlayCircle} from 'react-icons/bs'
 
 export default function Jumbotron({movies}) {
     return (
@@ -20,7 +21,9 @@ export default function Jumbotron({movies}) {
                                 style={{ textAlign: 'left', left: '5rem', bottom: '6rem'}}>
                                 <h3>{items.title}</h3>
                                 <p>{items.overview}</p>
-                                <Button style={{ backgroundColor: 'red', borderColor: 'red', borderRadius: '2rem', padding: '0.5rem 1rem' }}>WATCH TRAILLER</Button>
+                                <a href={`https://www.youtube.com/results?search_query=${items.title}trailer`} target="_blank" rel="noreferrer">
+                                    <Button style={{ backgroundColor: 'red', borderColor: 'red', borderRadius: '2rem', padding: '0.5rem 1rem' }} ><BsPlayCircle /><span> </span>WATCH TRAILLER</Button>
+                                </a>
                             </Carousel.Caption>
                             <img
                                 className=""

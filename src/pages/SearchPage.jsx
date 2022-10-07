@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios';
 
 import CardMovies from '../component/CardMovies';
+import NavbarMovies from '../component/NavbarMovies';
+import JumbotronSearch from '../component/JumbotronSearch';
 
 export default function SearchPage() {
     const location = useParams();
@@ -26,6 +28,8 @@ export default function SearchPage() {
 
     return (
         <div>
+            <NavbarMovies />
+            <JumbotronSearch title='All Movies' search={search}/>
             <CardMovies movies={movies}/>
         </div>
     )

@@ -13,7 +13,7 @@ const key = 'a69ac84e7a5ab50d30d9c6e241bda7f6';
 
 export default function HomeMovies() {
     const [ movies, setMovies ] = useState([]);
-    const [ categories, setCategories ] = useState([]);
+    // const [ categories, setCategories ] = useState([]);
     const [ trending, setTrending ] = useState([]);
 
     const getData = async() => {
@@ -26,15 +26,15 @@ export default function HomeMovies() {
         }
     }
 
-    const getDataCategory = async() => {
-        try {
-            const res = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`);
-            setCategories(res.data.genres)
-            console.log(res.data.genres);
-        } catch(error) {
-            console.error(error);
-        }
-    }
+    // const getDataCategory = async() => {
+    //     try {
+    //         const res = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`);
+    //         setCategories(res.data.genres)
+    //         console.log(res.data.genres);
+    //     } catch(error) {
+    //         console.error(error);
+    //     }
+    // }
 
     const getTrending = async() => {
         try {
@@ -47,7 +47,7 @@ export default function HomeMovies() {
 
     useEffect(() => {
         getData();
-        getDataCategory();
+        // getDataCategory();
         getTrending();
     }, [])
     return (
@@ -62,7 +62,7 @@ export default function HomeMovies() {
             <div>
                 <Container>
                     <CardInfo title='Browse By Category' />
-                    <ButtonCategories categories={categories}/>
+                    <ButtonCategories />
                     <CardMovies movies={movies} />
                 </Container>
             </div>

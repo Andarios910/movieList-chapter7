@@ -19,7 +19,7 @@ export default function NavbarMovies({movies, jumbotron}) {
         <>  
             <Navbar className='__nav' collapseOnSelect expand="lg">
                         <Container>
-                            <Navbar.Brand href="#home">
+                            <Navbar.Brand onClick={() => navigate('/')}>
                                 <img src='https://movielist-react-app.netlify.app/static/media/Logo.eeba5c17ddf85f2145e83dd963662921.svg' alt='logo'/>
                             </Navbar.Brand>
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />

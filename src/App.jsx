@@ -5,6 +5,7 @@ import HomeMovies from "./pages/HomeMovies";
 import DetailPage from "./pages/DetailPage";
 import SearchPage from "./pages/SearchPage";
 import CategoryPage from "./pages/CategoryPage";
+import AllMovie from "./pages/AllMovie";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/" element={<HomeMovies />} />
         <Route path=":id" element={<DetailPage />} />
         <Route path="/search/:s" element={<SearchPage />} />
-        <Route path="/genre/:genre" element={<CategoryPage />} />
+        <Route path="/genre/:name/:genre" element={<CategoryPage />} />
+        <Route path='/allmovie' element={<AllMovie />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { BsStar } from 'react-icons/bs'
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -11,7 +12,7 @@ export default function CardMovies({ movies, cardStatus }) {
     // const [check, setCheck] = useState(cardStatus);
 
     return (
-        <div className='movie__card '>
+        <div className='movie__card'>
             <Container className='container'>
                 <Swiper
                     slidesPerView={1}
@@ -65,7 +66,7 @@ export default function CardMovies({ movies, cardStatus }) {
                                     />
                                     <div className='description'>
                                         <h5>{items.title}</h5>
-                                        <p>{items.vote_average}/10</p>
+                                        <p><BsStar style={{ color: 'gold'}}/> {items.vote_average}/10</p>
                                     </div>
                                 </Card>
                             </SwiperSlide>
