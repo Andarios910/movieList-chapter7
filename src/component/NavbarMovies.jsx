@@ -50,7 +50,7 @@ export default function NavbarMovies({movies, jumbotron}) {
                                 (token) ? 
                                 <div className='d-flex align-items-center'>
                                     <p className='text-white mx-3 '>{userData.first_name}</p>
-                                    <img className='rounded border border-3' src={userData.image} width="40" height="40" class="d-inline-block align-top" alt=""/>
+                                    <img className='rounded border border-3 d-inline-block align-top' src={userData.image} width="40" height="40" alt=""/>
                                 </div> 
                                 : 
                                 <div>
