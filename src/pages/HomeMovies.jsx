@@ -33,6 +33,17 @@ export default function HomeMovies() {
         }
     }
 
+    // const setToken = (userToken) => {
+    //     localStorage.setItem('token', JSON.stringify(userToken))
+    // }
+
+    // function getToken() {
+    //     const TokenString = localStorage.getItem('token');
+    //     const userToken = JSON.parse(TokenString);
+    //     console.log(userToken)
+    //     return userToken?.token
+    // }
+
     useEffect(() => {
         getData();
         getTrending();

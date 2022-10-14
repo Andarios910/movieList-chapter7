@@ -195,3 +195,17 @@ form:hover {
   margin-bottom: 2rem;
 }
 
+.form__register {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  border: none;
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+}
+
