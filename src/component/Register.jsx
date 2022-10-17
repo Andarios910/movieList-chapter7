@@ -23,7 +23,7 @@ export default function Register({ setToken }) {
         setFormErrors(validate(formValues));
         // setIsSubmit(true);
         try {
-            const req = await axios.post('http://notflixtv.herokuapp.com/api/v1/users', formValues)
+            const req = await axios.post('https://notflixtv.herokuapp.com/api/v1/users', formValues)
             localStorage.setItem('user', JSON.stringify(req.data.data))
             setFormValues({first_name: "", last_name: "",  email: "", password: "", password_confirmation: ""})
             const user = JSON.parse(localStorage.getItem('user'))
