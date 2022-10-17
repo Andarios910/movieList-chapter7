@@ -21,13 +21,13 @@ export default function Register({ setToken }) {
     const handleSubmit = async(e) => {
         e.preventDefault();
         setFormErrors(validate(formValues));
-        // setIsSubmit(true);
         try {
             const req = await axios.post('https://notflixtv.herokuapp.com/api/v1/users', formValues)
+            localStorage.setItem('token', req.data.data.token)
             localStorage.setItem('user', JSON.stringify(req.data.data))
             setFormValues({first_name: "", last_name: "",  email: "", password: "", password_confirmation: ""})
-            const user = JSON.parse(localStorage.getItem('user'))
-            if(user.token) {
+            const token = localStorage.getItem('token')
+            if(token) {
                 setToken(true);
             } else {
                 setToken(false);
@@ -39,11 +39,8 @@ export default function Register({ setToken }) {
     };
 
     useEffect(() => {
-        // if (Object.keys(formErrors).length === 0 && isSubmit) {
-        //     console.log(formValues);
-        // }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formErrors]);
+
+    }, []);
 
     const validate = (values) => {
         const errors = {};

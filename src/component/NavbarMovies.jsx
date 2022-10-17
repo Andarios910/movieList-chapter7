@@ -7,9 +7,16 @@ import Jumbotron from './Jumbotron';
 import Register from './Register';
 import Login from './Login';
 
+// import { GoogleLogin } from 'react-google-login';
+
+
+// const responseGoogle = (response) => {
+//     console.log(response);
+// }
+
 export default function NavbarMovies({movies, jumbotron}) {
     const [query, setQuery] = useState('');
-    const [token, setToken] = useState(false)
+    const [alreadyLogin, setAlreadyLogin] = useState(false)
     const navigate = useNavigate();
 
     const handleSubmitSearch = () => {
@@ -18,19 +25,23 @@ export default function NavbarMovies({movies, jumbotron}) {
 
     const logOut = (e) => {
         e.preventDefault();
-        setToken(false);
+        setAlreadyLogin(false);
         localStorage.removeItem("user");
+        localStorage.removeItem("token");
     }
-
-    const user = localStorage.getItem('user');
-    const userData = JSON.parse(user);
+    
+    const userString = localStorage.getItem('user');
+    const user = JSON.parse(userString)
+    console.log(user);
 
     useEffect(() => {
-        if(userData) {
-            setToken(true)
+
+        if (user) {
+            setAlreadyLogin(true);
         }
+    
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [token])
+    }, [])
 
 
     return (
@@ -52,20 +63,21 @@ export default function NavbarMovies({movies, jumbotron}) {
                                     <BsSearch className='icon__search' type='submit'/>
                             </form>
                             {
-                                (token) ? 
+                                (alreadyLogin) ? 
                                 <div className='d-flex align-items-center'>
-                                    <p className='text-white mx-3 '>{userData.first_name}</p>
-                                    <img className='rounded border border-3 d-inline-block align-top' src={userData.image} width="40" height="40" alt=""/>
+                                    <p className='text-white mx-3 '>{user.first_name || user.name}</p>
+                                    <img className='rounded' src={user.image || user.imageUrl} width="40" height="40" alt="profile"/>
                                     <Button onClick={logOut} className='nav__button' variant='danger' style={{ borderRadius: '2rem' }} >LogOut</Button>
                                 </div> 
                                 : 
                                 <div>
-                                    <Login setToken={setToken} />
-                                    <Register setToken={setToken} />
+                                    <Login setToken={setAlreadyLogin} />
+                                    <Register setToken={setAlreadyLogin} />
                                 </div>
                             }
                         </Nav>
                     </Navbar.Collapse>
+                    
                 </Container>
             </Navbar>
             <Jumbotron movies={jumbotron}/>
