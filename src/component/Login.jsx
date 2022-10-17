@@ -7,7 +7,7 @@ import axios from 'axios';
 import { BsEnvelope } from 'react-icons/bs'
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
 
-export default function Register({ token, setToken }) {
+export default function Register({ setToken }) {
     const initialValues = { email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
@@ -39,10 +39,9 @@ export default function Register({ token, setToken }) {
     };
     
     useEffect(() => {
-        // console.log(formErrors);
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formValues);
-        }
+        // if (Object.keys(formErrors).length === 0 && isSubmit) {
+        //     console.log(formValues);
+        // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formErrors]);
 
@@ -85,12 +84,10 @@ export default function Register({ token, setToken }) {
                     <Form className='form__register' onSubmit={handleSubmit}>
                         <Form.Group className="mb-3 position-relative" controlId="formEmail">
                             <Form.Control
-                                // required
                                 name='email' 
                                 type="email" 
                                 placeholder='Email Address' 
                                 value={formValues.email}
-                                // onChange={(e) => setEmail(e.target.value)}
                                 onChange={handleChange}
                             />
                             <BsEnvelope className='icon' />
@@ -99,13 +96,11 @@ export default function Register({ token, setToken }) {
                         
                         <Form.Group className="mb-3 position-relative" controlId="formPassword">
                             <Form.Control
-                                // required  
                                 name='password'
                                 type={(showPassword === false) ? 'password':'text'} 
                                 placeholder='Password' 
                                 autoComplete="off" 
                                 value={formValues.password}
-                                // onChange={(e) => setPwd(e.target.value)}
                                 onChange={handleChange} 
                             />
                             <div>

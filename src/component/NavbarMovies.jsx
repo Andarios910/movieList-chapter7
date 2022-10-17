@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { BsSearch } from 'react-icons/bs'
 
 import Jumbotron from './Jumbotron';
@@ -16,9 +16,14 @@ export default function NavbarMovies({movies, jumbotron}) {
         navigate(`/search/${query}`)
     }
 
+    const logOut = (e) => {
+        e.preventDefault();
+        setToken(false);
+        localStorage.removeItem("user");
+    }
+
     const user = localStorage.getItem('user');
     const userData = JSON.parse(user);
-    console.log(userData);
 
     useEffect(() => {
         if(userData) {
@@ -51,11 +56,12 @@ export default function NavbarMovies({movies, jumbotron}) {
                                 <div className='d-flex align-items-center'>
                                     <p className='text-white mx-3 '>{userData.first_name}</p>
                                     <img className='rounded border border-3 d-inline-block align-top' src={userData.image} width="40" height="40" alt=""/>
+                                    <Button onClick={logOut} className='nav__button' variant='danger' style={{ borderRadius: '2rem' }} >LogOut</Button>
                                 </div> 
                                 : 
                                 <div>
                                     <Login setToken={setToken} />
-                                    <Register />
+                                    <Register setToken={setToken} />
                                 </div>
                             }
                         </Nav>
