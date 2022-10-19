@@ -11,7 +11,6 @@ export default function Register({ setToken }) {
     const initialValues = { first_name: "", last_name: "",  email: "", password: "", password_confirmation: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
-    // const [isSubmit, setIsSubmit] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -169,7 +168,7 @@ export default function Register({ setToken }) {
                             <p className='text-danger'>{formErrors.password_confirmation}</p>
                         </Form.Group>
 
-                        <Button variant="danger" type="submit">
+                        <Button className='modal__button' variant="danger" type="submit" style={{ borderRadius: '2.5rem' }}>
                             Register
                         </Button>
                     </Form>

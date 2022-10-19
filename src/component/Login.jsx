@@ -7,30 +7,12 @@ import axios from 'axios';
 import { BsEnvelope } from 'react-icons/bs'
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
 
-import { GoogleLogin } from 'react-google-login';
-import { gapi } from 'gapi-script'
-
-
-
+import { GoogleLogin } from '@react-oauth/google';
 
 export default function Register({ setToken }) {
     const initialValues = { email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
-    // const [isSubmit, setIsSubmit] = useState(false);
-
-    const responseGoogle = (response) => {
-        console.log(response);
-        localStorage.setItem('token', response.accessToken)
-        localStorage.setItem('user', JSON.stringify(response.profileObj))
-        const token = localStorage.getItem('token')
-        if(token) {
-            setToken(true);
-        } else {
-            setToken(false);
-        }
-        handleClose();
-    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -58,17 +40,6 @@ export default function Register({ setToken }) {
     };
     
     useEffect(() => {
-        // if (Object.keys(formErrors).length === 0 && isSubmit) {
-        //     console.log(formValues);
-        // }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        gapi.load("client:auth2", () => {
-            gapi.auth2.init({
-                clientId:
-                "459433156110-199mf5mf80e7abqcj333lbf353dna0u4.apps.googleusercontent.com",
-                plugin_name: "",
-            });
-        });
         
     }, [formErrors]);
 
@@ -140,19 +111,24 @@ export default function Register({ setToken }) {
                             <p className='text-danger'>{formErrors.password}</p>
                         </Form.Group>
                         
-                        <Button variant="danger" type='submit'>
+                        <Button className='modal__button' variant="danger" type='submit' style={{borderRadius: '2.5rem'}}>
                             Login
                         </Button>
-                        <div>
-                            <GoogleLogin
-                                clientId="459433156110-199mf5mf80e7abqcj333lbf353dna0u4.apps.googleusercontent.com"
-                                buttonText="Login"
-                                onSuccess={responseGoogle}
-                                onFailure={responseGoogle}
-                                cookiePolicy={'single_host_origin'}
-                                scope="profile"
-                            />,
-                        </div>
+                        <GoogleLogin
+                            onSuccess={credentialResponse => {
+                                localStorage.setItem('google_user', credentialResponse.credential)
+                                const token = localStorage.getItem('google_user');
+                                if(token) {
+                                    setToken(true);
+                                } else {
+                                    setToken(false);
+                                }
+                                handleClose();
+                            }}
+                            onError={() => {
+                                console.log('Login Failed');
+                            }}
+                        />;
                     </Form>
                 </Modal.Body>
             </Modal>

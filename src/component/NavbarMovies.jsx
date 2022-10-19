@@ -7,12 +7,8 @@ import Jumbotron from './Jumbotron';
 import Register from './Register';
 import Login from './Login';
 
-// import { GoogleLogin } from 'react-google-login';
-
-
-// const responseGoogle = (response) => {
-//     console.log(response);
-// }
+const nameLogin = 'Google Account'
+const image = 'https://listimg.pinclipart.com/picdir/s/84-841840_svg-royalty-free-library-icon-svg-profile-profile.png'
 
 export default function NavbarMovies({movies, jumbotron}) {
     const [query, setQuery] = useState('');
@@ -28,11 +24,11 @@ export default function NavbarMovies({movies, jumbotron}) {
         setAlreadyLogin(false);
         localStorage.removeItem("user");
         localStorage.removeItem("token");
+        localStorage.removeItem('google_user')
     }
     
     const userString = localStorage.getItem('user');
     const user = JSON.parse(userString)
-    console.log(user);
 
     useEffect(() => {
 
@@ -65,8 +61,8 @@ export default function NavbarMovies({movies, jumbotron}) {
                             {
                                 (alreadyLogin) ? 
                                 <div className='d-flex align-items-center'>
-                                    <p className='text-white mx-3 '>{user.first_name || user.name}</p>
-                                    <img className='rounded' src={user.image || user.imageUrl} width="40" height="40" alt="profile"/>
+                                    <p className='text-white mx-3 '>{user ? user.first_name : nameLogin}</p>
+                                    <img className='rounded' src={user ? user.image === 'undefined' ? image : user.image  : image} width="40" height="40" alt="profile"/>
                                     <Button onClick={logOut} className='nav__button' variant='danger' style={{ borderRadius: '2rem' }} >LogOut</Button>
                                 </div> 
                                 : 

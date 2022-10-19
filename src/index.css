@@ -209,3 +209,8 @@ form:hover {
   top: 10px;
 }
 
+.modal__button {
+  width: 6rem;
+  margin-bottom: 20px;
+}
+
