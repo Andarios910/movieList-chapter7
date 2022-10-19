@@ -9,6 +9,7 @@ import CardInfo from '../component/CardInfo';
 import FooterMovie from '../component/FooterMovie';
 
 const key = 'a69ac84e7a5ab50d30d9c6e241bda7f6';
+const image = 'https://listimg.pinclipart.com/picdir/s/84-841840_svg-royalty-free-library-icon-svg-profile-profile.png'
 
 export default function DetailPage() {
     const location = useParams();
@@ -43,7 +44,7 @@ export default function DetailPage() {
 
     return (
         <div>
-            <NavbarMovies />
+            <NavbarMovies nameLogin='Google Account' image={image}/>
             <JumbotronDetail movies={movie}/>
             <CardInfo title='Cast and Crew Info' check='true' />
             <CardMovies movies={cast} cardStatus='true' />

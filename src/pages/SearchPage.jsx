@@ -6,6 +6,8 @@ import CardMovies from '../component/CardMovies';
 import NavbarMovies from '../component/NavbarMovies';
 import JumbotronSearch from '../component/JumbotronSearch';
 
+const image = 'https://listimg.pinclipart.com/picdir/s/84-841840_svg-royalty-free-library-icon-svg-profile-profile.png'
+
 export default function SearchPage() {
     const location = useParams();
     const search = location.s;
@@ -28,7 +30,7 @@ export default function SearchPage() {
 
     return (
         <div>
-            <NavbarMovies />
+            <NavbarMovies nameLogin='Google Account' image={image}/>
             <JumbotronSearch title='All Movies' search={search}/>
             <CardMovies movies={movies}/>
         </div>

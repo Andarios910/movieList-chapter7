@@ -7,10 +7,7 @@ import Jumbotron from './Jumbotron';
 import Register from './Register';
 import Login from './Login';
 
-const nameLogin = 'Google Account'
-const image = 'https://listimg.pinclipart.com/picdir/s/84-841840_svg-royalty-free-library-icon-svg-profile-profile.png'
-
-export default function NavbarMovies({movies, jumbotron}) {
+export default function NavbarMovies({movies, jumbotron, nameLogin, image}) {
     const [query, setQuery] = useState('');
     const [alreadyLogin, setAlreadyLogin] = useState(false)
     const navigate = useNavigate();
@@ -28,11 +25,14 @@ export default function NavbarMovies({movies, jumbotron}) {
     }
     
     const userString = localStorage.getItem('user');
+    const token = localStorage.getItem('google_user')
     const user = JSON.parse(userString)
+
+    console.log(alreadyLogin);
 
     useEffect(() => {
 
-        if (user) {
+        if (user || token) {
             setAlreadyLogin(true);
         }
     
