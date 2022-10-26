@@ -6,33 +6,28 @@ import CardMovies from '../component/CardMovies';
 import NavbarMovies from '../component/NavbarMovies';
 import JumbotronSearch from '../component/JumbotronSearch';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { getSearch } from '../features/movies/searchSlice';
+
+const key = 'a69ac84e7a5ab50d30d9c6e241bda7f6';
 const image = 'https://listimg.pinclipart.com/picdir/s/84-841840_svg-royalty-free-library-icon-svg-profile-profile.png'
 
 export default function SearchPage() {
     const location = useParams();
     const search = location.s;
-    const key = 'a69ac84e7a5ab50d30d9c6e241bda7f6';
-    const [movies, setMovies] = useState([]);
-
-    const getSearch = async() => {
-        try {
-            const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&page=1&include_adult=false&query=${search}`)
-            setMovies(res.data.results)
-        }catch(error) {
-            console.error(error);
-        }
-    }
+    const dispatch = useDispatch();
+    const { data, isLoading, hasError } = useSelector((state) => state.search)
+    console.log(data)
 
     useEffect(() => {
-        getSearch();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        dispatch(getSearch(search))
+    }, [dispatch, search])
 
     return (
         <div>
             <NavbarMovies nameLogin='Google Account' image={image}/>
             <JumbotronSearch title='All Movies' search={search}/>
-            <CardMovies movies={movies}/>
+            <CardMovies movies={data}/>
         </div>
     )
 }
