@@ -6,8 +6,8 @@ import Modal from 'react-bootstrap/Modal';
 import { BsEnvelope } from 'react-icons/bs'
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
 
-import { useSelector, useDispatch } from 'react-redux';
-import { handleLogin } from '../features/login/loginSlice';
+import { useDispatch } from 'react-redux';
+import { handleLogin, googleOauth } from '../features/login/loginSlice';
 
 import { GoogleLogin } from '@react-oauth/google';
 
@@ -16,7 +16,6 @@ export default function Register({ setToken }) {
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const dispatch = useDispatch();
-    const { login } = useSelector((state) => state.login)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,21 +25,29 @@ export default function Register({ setToken }) {
     const handleSubmit = async(e) => {
         e.preventDefault();
         setFormErrors(validate(formValues));
-        dispatch(handleLogin(formValues))
-        localStorage.setItem('token', login.token);
-        localStorage.setItem('user', JSON.stringify(login));
-        setFormValues({ email: "", password: "" })
-        const token = localStorage.getItem('token')
-        if(login && token) {
+        try {
+            dispatch(handleLogin(formValues))
+            setFormValues({email: '', password: ''})
+            handleClose();
+        } catch(error) {
+            console.error(error);
+        }
+    };
+
+    const handleLoginGoogle = (credentialResponse) => {
+        dispatch(googleOauth(credentialResponse))
+        handleClose();
+    }
+
+    const token = localStorage.getItem('token');
+    const gToken = localStorage.getItem('google_user');
+    useEffect(() => {
+        if(token || gToken) {
             setToken(true);
         } else {
             setToken(false)
         }
-        handleClose();
-    };
-    
-    useEffect(() => {
-    }, [formErrors]);
+    }, [token, setToken, gToken]);
 
     const validate = (values) => {
         const errors = {};
@@ -114,20 +121,11 @@ export default function Register({ setToken }) {
                             Login
                         </Button>
                         <GoogleLogin
-                            onSuccess={credentialResponse => {
-                                localStorage.setItem('google_user', credentialResponse.credential)
-                                const token = localStorage.getItem('google_user');
-                                if(token) {
-                                    setToken(true);
-                                } else {
-                                    setToken(false);
-                                }
-                                handleClose();
-                            }}
+                            onSuccess={handleLoginGoogle}
                             onError={() => {
                                 console.log('Login Failed');
                             }}
-                        />;
+                        />
                     </Form>
                 </Modal.Body>
             </Modal>

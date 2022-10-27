@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -7,10 +6,15 @@ import Modal from 'react-bootstrap/Modal';
 import { BsPerson, BsEnvelope } from 'react-icons/bs'
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
 
+import { useDispatch } from 'react-redux';
+import { handleRegister } from '../features/login/loginSlice';
+
 export default function Register({ setToken }) {
     const initialValues = { first_name: "", last_name: "",  email: "", password: "", password_confirmation: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
+
+    const dispatch = useDispatch();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,25 +25,22 @@ export default function Register({ setToken }) {
         e.preventDefault();
         setFormErrors(validate(formValues));
         try {
-            const req = await axios.post('https://notflixtv.herokuapp.com/api/v1/users', formValues)
-            localStorage.setItem('token', req.data.data.token)
-            localStorage.setItem('user', JSON.stringify(req.data.data))
+            dispatch(handleRegister(formValues));
             setFormValues({first_name: "", last_name: "",  email: "", password: "", password_confirmation: ""})
-            const token = localStorage.getItem('token')
-            if(token) {
-                setToken(true);
-            } else {
-                setToken(false);
-            }
             handleClose();
         }catch(error) {
-            console.error(error);
+            console.error(error)
         }
-    };
+    }
 
+    const token = localStorage.getItem('token')
     useEffect(() => {
-
-    }, []);
+        if(token) {
+            setToken(true);
+        } else {
+            setToken(false);
+        }
+    }, [token, setToken]);
 
     const validate = (values) => {
         const errors = {};

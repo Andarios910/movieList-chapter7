@@ -24,20 +24,16 @@ export default function NavbarMovies({movies, jumbotron, nameLogin, image}) {
         localStorage.removeItem('google_user')
     }
     
-    const userString = localStorage.getItem('user');
+    const user = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('google_user')
-    const user = JSON.parse(userString)
-
-    console.log(alreadyLogin);
 
     useEffect(() => {
 
         if (user || token) {
             setAlreadyLogin(true);
         }
-    
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+
+    }, [user, token])
 
 
     return (
@@ -62,7 +58,7 @@ export default function NavbarMovies({movies, jumbotron, nameLogin, image}) {
                                 (alreadyLogin) ? 
                                 <div className='d-flex align-items-center'>
                                     <p className='text-white mx-3 '>{user ? user.first_name : nameLogin}</p>
-                                    <img className='rounded' src={user ? user.image === 'undefined' ? image : user.image  : image} width="40" height="40" alt="profile"/>
+                                    <img className='rounded' src={user ? user.image === 'undefined' ? image : user.image === null ? image : user.image  : image} width="40" height="40" alt="profile"/>
                                     <Button onClick={logOut} className='nav__button' variant='danger' style={{ borderRadius: '2rem' }} >LogOut</Button>
                                 </div> 
                                 : 
