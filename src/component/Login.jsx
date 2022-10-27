@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import axios from 'axios';
 
 import { BsEnvelope } from 'react-icons/bs'
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
+
+import { useSelector, useDispatch } from 'react-redux';
+import { handleLogin } from '../features/login/loginSlice';
 
 import { GoogleLogin } from '@react-oauth/google';
 
@@ -13,6 +15,8 @@ export default function Register({ setToken }) {
     const initialValues = { email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
+    const dispatch = useDispatch();
+    const { login } = useSelector((state) => state.login)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,25 +26,20 @@ export default function Register({ setToken }) {
     const handleSubmit = async(e) => {
         e.preventDefault();
         setFormErrors(validate(formValues));
-        try {
-            const req = await axios.post('https://notflixtv.herokuapp.com/api/v1/users/login', formValues)
-            localStorage.setItem('token', req.data.data.token)
-            localStorage.setItem('user', JSON.stringify(req.data.data));
-            setFormValues({ email: "", password: "" })
-            const token = localStorage.getItem('token');
-            if(token) {
-                setToken(true);
-            } else {
-                setToken(false)
-            }
-            handleClose();
-        }catch(error) {
-            console.error(error);
+        dispatch(handleLogin(formValues))
+        localStorage.setItem('token', login.token);
+        localStorage.setItem('user', JSON.stringify(login));
+        setFormValues({ email: "", password: "" })
+        const token = localStorage.getItem('token')
+        if(login && token) {
+            setToken(true);
+        } else {
+            setToken(false)
         }
+        handleClose();
     };
     
     useEffect(() => {
-        
     }, [formErrors]);
 
     const validate = (values) => {
