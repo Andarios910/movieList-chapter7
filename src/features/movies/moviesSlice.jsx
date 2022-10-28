@@ -13,6 +13,18 @@ export const getMovies = createAsyncThunk(
     }
 )
 
+export const getAllMovies = createAsyncThunk(
+    'movie/getAllMovies',
+    async(key, page) => {
+        try {
+            const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=${page}`);
+            return res.data.results;
+        } catch(error) {
+            console.error(error);
+        }
+    }
+)
+
 export const getMoviesDetail = createAsyncThunk(
     'movies/getMoviesDetail',
     async(id) => {
@@ -31,7 +43,6 @@ export const getCast = createAsyncThunk(
         try {
             const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=a69ac84e7a5ab50d30d9c6e241bda7f6&language=en-US`)
             console.log(res.data.cast)
-            // const info = res.data.cast.slice(0,10)
             return res.data.cast;
         } catch(error) {
             console.error(error);
@@ -43,6 +54,7 @@ const initialState = {
     movies: [],
     detail: [],
     cast: [],
+    allMovie:[],
     isLoading: false,
     hasError: false,
 }
@@ -60,6 +72,9 @@ export const moviesSlice = createSlice({
         },
         [getCast.fulfilled]: (state, {payload}) => {
             state.cast = payload
+        },
+        [getAllMovies.fulfilled]: (state, {payload}) => {
+            state.allMovie = payload
         }
     }
 })

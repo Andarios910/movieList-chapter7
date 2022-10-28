@@ -1,27 +1,22 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios';
+import React, { useEffect } from 'react'
 
 import { Button, Container } from 'react-bootstrap'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from 'react-router-dom';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { getGenre } from '../features/genre/genreSlice';
+
+const key = 'a69ac84e7a5ab50d30d9c6e241bda7f6';
+
 export default function ButtonCategories({click}) {
     const navigate = useNavigate();
-    const [ categories, setCategories ] = useState('');
-    const key = 'a69ac84e7a5ab50d30d9c6e241bda7f6';
-
-    const getDataCategory = async() => {
-        try {
-            const res = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`);
-            setCategories(res.data.genres)
-        } catch(error) {
-            console.error(error);
-        }
-    }
+    const dispatch = useDispatch();
+    const { genre } = useSelector((state) => state.genre)
 
     useEffect(() => {
-        getDataCategory();
-    }, [])
+        dispatch(getGenre(key))
+    }, [dispatch])
 
     return (
         <Container>
@@ -32,8 +27,8 @@ export default function ButtonCategories({click}) {
                     className="mySwiper"
                 >
                 {
-                    categories &&
-                    categories.map(genre => (
+                    genre &&
+                    genre.map(genre => (
                         <SwiperSlide key={genre.id} >
                             <Button 
                                 className='btn__category'

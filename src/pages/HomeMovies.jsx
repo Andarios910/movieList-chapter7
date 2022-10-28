@@ -24,6 +24,7 @@ export default function HomeMovies() {
         dispatch(getMovies(key));
         dispatch(getTrending(key));
     }, [dispatch])
+    
     return (
         <div>
             <NavbarMovies movies={movies} jumbotron={trending} nameLogin='Google Account' image={image} />

@@ -1,31 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import ReactPaginate from "react-paginate";
-import axios from 'axios';
 import CardAll from '../component/CardAll';
 import NavbarMovies from '../component/NavbarMovies';
 import JumbotronSearch from '../component/JumbotronSearch';
 import FooterMovie from '../component/FooterMovie';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllMovies } from '../features/movies/moviesSlice';
+
 const key = 'a69ac84e7a5ab50d30d9c6e241bda7f6';
 const image = 'https://listimg.pinclipart.com/picdir/s/84-841840_svg-royalty-free-library-icon-svg-profile-profile.png'
 
 export default function AllMovie() {
-    const [ data, setData ] = useState([]);
     const [page, setPage] = useState(1);
     const pageCount = 6;
+    const dispatch = useDispatch();
+    const { allMovie } = useSelector((state) => state.movies)
 
-    const getData = async() => {
-        try {
-            const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=${page}`);
-            setData(res.data.results)
-        } catch(error) {
-            console.error(error);
-        }
-    }
     useEffect(() => {
-        getData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        dispatch(getAllMovies(key, page))
+    }, [dispatch, page])
 
     const handlePageClick = (data) => {
         setPage(data.selected + 1);
@@ -35,7 +29,7 @@ export default function AllMovie() {
         <div>
             <NavbarMovies nameLogin='Google Account' image={image}/>
             <JumbotronSearch title='All Movies' search='Movies' />
-            <CardAll movies={data} />
+            <CardAll movies={allMovie} />
             <ReactPaginate
                 previousLabel={"previous"}
                 nextLabel={"next"}
