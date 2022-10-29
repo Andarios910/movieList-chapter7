@@ -57,8 +57,13 @@ export default function NavbarMovies({movies, jumbotron, nameLogin, image}) {
                             {
                                 (alreadyLogin) ? 
                                 <div className='d-flex align-items-center'>
-                                    <p className='text-white mx-3 '>{user ? user.first_name : nameLogin}</p>
-                                    <img className='rounded' src={user ? user.image === 'undefined' ? image : user.image === null ? image : user.image  : image} width="40" height="40" alt="profile"/>
+                                    <p className='text-white mx-3 '>{user.first_name || user.given_name}</p>
+                                    <img 
+                                        className='rounded' 
+                                        src={user.image === 'undefined' ? image : user.image === null ? image : user.image  || user.picture} 
+                                        width="40" 
+                                        height="40" 
+                                        alt="profile"/>
                                     <Button onClick={logOut} className='nav__button' variant='danger' style={{ borderRadius: '2rem' }} >LogOut</Button>
                                 </div> 
                                 : 

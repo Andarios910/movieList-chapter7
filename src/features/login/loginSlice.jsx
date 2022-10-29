@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 export const handleLogin = createAsyncThunk(
     'login/handleLogin',
@@ -36,7 +37,10 @@ export const handleRegister = createAsyncThunk(
 export const googleOauth = createAsyncThunk(
     'login/googleOauth',
     async(credentialResponse) => {
-        localStorage.setItem('google_user', credentialResponse.credential)
+        localStorage.setItem('google_user', credentialResponse.credential);
+        const token = localStorage.getItem('google_user')
+        const decode = jwtDecode(token);
+        localStorage.setItem('user', JSON.stringify(decode));
     }
 )
 
