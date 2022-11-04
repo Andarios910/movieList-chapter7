@@ -1,9 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import jwtDecode from "jwt-decode";
-import { auth, logInWithEmailAndPassword, registerWithEmailAndPassword, signInWithEmailAndPassword, signInWithGoogle } from "../../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useSearchParams } from "react-router-dom";
+import { logInWithEmailAndPassword, registerWithEmailAndPassword, signInWithGoogle } from "../../firebase";
 
 export const handleLogin = createAsyncThunk(
     'login/handleLogin',
