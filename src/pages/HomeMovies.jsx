@@ -20,8 +20,6 @@ export default function HomeMovies() {
     const { trending } = useSelector((state) => state.trending)
     const dispatch = useDispatch();
 
-    console.log(process.env.REACT_APP_API_KEY)
-
     useEffect(() => {
         dispatch(getMovies(key));
         dispatch(getTrending(key));

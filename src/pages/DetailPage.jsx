@@ -18,8 +18,6 @@ export default function DetailPage() {
     const { detail, cast } = useSelector((state) => state.movies);
     const dispatch = useDispatch();
 
-    console.log(cast)
-
     useEffect(() => {
         dispatch(getMoviesDetail(id))
         dispatch(getCast(id))

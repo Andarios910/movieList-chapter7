@@ -42,7 +42,6 @@ export const getCast = createAsyncThunk(
     async(id) => {
         try {
             const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=a69ac84e7a5ab50d30d9c6e241bda7f6&language=en-US`)
-            console.log(res.data.cast)
             return res.data.cast;
         } catch(error) {
             console.error(error);

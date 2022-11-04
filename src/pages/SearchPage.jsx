@@ -15,7 +15,6 @@ export default function SearchPage() {
     const search = location.s;
     const dispatch = useDispatch();
     const { data } = useSelector((state) => state.search)
-    console.log(data)
 
     useEffect(() => {
         dispatch(getSearch(search))
