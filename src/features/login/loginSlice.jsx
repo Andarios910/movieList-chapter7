@@ -24,13 +24,9 @@ export const handleRegister = createAsyncThunk(
             const req = await registerWithEmailAndPassword(formValues.name, formValues.email, formValues.password)
             localStorage.setItem('token', JSON.stringify(req.accessToken));
             localStorage.setItem('user', JSON.stringify(req))
-            // console.log(req)
-            // const req = await axios.post('https://notflixtv.herokuapp.com/api/v1/users', formValues)
-            // localStorage.setItem('token', req.data.data.token)
-            // localStorage.setItem('user', JSON.stringify(req.data.data))
-            // setTimeout(() => {
-            //     window.location.reload(1)
-            // }, 1500)
+            setTimeout(() => {
+                window.location.reload(1)
+            }, 1500)
         }catch(error) {
             console.error(error);
         }
@@ -44,14 +40,12 @@ export const googleOauth = createAsyncThunk(
             const req = await signInWithGoogle();
             localStorage.setItem('token', JSON.stringify(req.accessToken))
             localStorage.setItem('user', JSON.stringify(req));
+            setTimeout(() => {
+                window.location.reload(1)
+            }, 1500)
         } catch(error) {
             console.error(error);
         }
-        
-        // localStorage.setItem('google_user', credentialResponse.credential);
-        // const token = localStorage.getItem('google_user')
-        // const decode = jwtDecode(token);
-        // localStorage.setItem('user', JSON.stringify(decode));
     }
 )
 
