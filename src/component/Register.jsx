@@ -9,9 +9,6 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
 import { useDispatch } from 'react-redux';
 import { handleRegister } from '../features/login/loginSlice';
 
-import { auth, registerWithEmailAndPassword } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-
 export default function Register({ setToken }) {
     const initialValues = { name:"",  email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
@@ -80,15 +77,15 @@ export default function Register({ setToken }) {
     const handleShow = () => setShow(true);
 
     const [showPassword, setShowPassword] = useState(false);
-    const [showPwdCon, setShowPwdCon] = useState(false);
+    // const [showPwdCon, setShowPwdCon] = useState(false);
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword)
     }
 
-    const handleClickConPass = () => {
-        setShowPwdCon(!showPwdCon)
-    }
+    // const handleClickConPass = () => {
+    //     setShowPwdCon(!showPwdCon)
+    // }
 
     return (
         <>

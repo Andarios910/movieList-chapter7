@@ -7,8 +7,7 @@ import Jumbotron from './Jumbotron';
 import Register from './Register';
 import Login from './Login';
 
-import { auth, logInWithEmailAndPassword, signInWithEmailAndPassword, signInWithGoogle, logout } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { logout } from "../firebase";
 
 export default function NavbarMovies({movies, jumbotron, nameLogin, image}) {
     const [query, setQuery] = useState('');

@@ -6,23 +6,22 @@ import Modal from 'react-bootstrap/Modal';
 import { BsEnvelope } from 'react-icons/bs'
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { handleLogin, googleOauth } from '../features/login/loginSlice';
 
-import { GoogleLogin } from '@react-oauth/google';
-import { auth, logInWithEmailAndPassword, signInWithEmailAndPassword, signInWithGoogle } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+// import { auth } from "../firebase";
+// import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Register({ setToken }) {
     const initialValues = { email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const dispatch = useDispatch();
-    const { loginEP } = useSelector((state) => state.login)
+    // const { loginEP } = useSelector((state) => state.login)
 
-    const [user, loading, error] = useAuthState(auth);
+    // const [user, loading, error] = useAuthState(auth);
     
-    console.log(loginEP)
+    // console.log(loginEP)
     // console.log(user);
 
     const handleChange = (e) => {
