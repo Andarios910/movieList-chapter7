@@ -6,27 +6,38 @@ import Modal from 'react-bootstrap/Modal';
 import { BsEnvelope } from 'react-icons/bs'
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { handleLogin, googleOauth } from '../features/login/loginSlice';
 
 import { GoogleLogin } from '@react-oauth/google';
+import { auth, logInWithEmailAndPassword, signInWithEmailAndPassword, signInWithGoogle } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Register({ setToken }) {
     const initialValues = { email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const dispatch = useDispatch();
+    const { loginEP } = useSelector((state) => state.login)
+
+    const [user, loading, error] = useAuthState(auth);
+    
+    console.log(loginEP)
+    // console.log(user);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     };
+
+    // console.log(auth)
     
     const handleSubmit = async(e) => {
         e.preventDefault();
         setFormErrors(validate(formValues));
         try {
             dispatch(handleLogin(formValues))
+            // logInWithEmailAndPassword(formValues.email, formValues.password)
             setFormValues({email: '', password: ''})
             handleClose();
         } catch(error) {
@@ -34,9 +45,14 @@ export default function Register({ setToken }) {
         }
     };
 
-    const handleLoginGoogle = (credentialResponse) => {
-        dispatch(googleOauth(credentialResponse))
-        handleClose();
+    const handleLoginGoogle = () => {
+        try {
+            dispatch(googleOauth())
+            handleClose();
+        }catch(error){
+            console.error(error);
+        }
+        // dispatch(googleOauth(credentialResponse))
     }
 
     const token = localStorage.getItem('token');
@@ -120,13 +136,18 @@ export default function Register({ setToken }) {
                         <Button className='modal__button' variant="danger" type='submit' style={{borderRadius: '2.5rem'}}>
                             Login
                         </Button>
-                        <GoogleLogin
+                        {/* <GoogleLogin
                             onSuccess={handleLoginGoogle}
                             onError={() => {
                                 console.log('Login Failed');
                             }}
-                        />
+                        /> */}
                     </Form>
+                    <Button 
+                            onClick={handleLoginGoogle} 
+                            className='modal__button' variant="danger" type='google' style={{borderRadius: '2.5rem'}}>
+                            Login Wiwth Google
+                    </Button>
                 </Modal.Body>
             </Modal>
         </>

@@ -9,8 +9,11 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
 import { useDispatch } from 'react-redux';
 import { handleRegister } from '../features/login/loginSlice';
 
+import { auth, registerWithEmailAndPassword } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 export default function Register({ setToken }) {
-    const initialValues = { first_name: "", last_name: "",  email: "", password: "", password_confirmation: "" };
+    const initialValues = { name:"",  email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
 
@@ -25,8 +28,10 @@ export default function Register({ setToken }) {
         e.preventDefault();
         setFormErrors(validate(formValues));
         try {
-            dispatch(handleRegister(formValues));
-            setFormValues({first_name: "", last_name: "",  email: "", password: "", password_confirmation: ""})
+            // dispatch(handleRegister(formValues));
+            // registerWithEmailAndPassword(formValues.name, formValues.email, formValues.password)
+            dispatch(handleRegister(formValues))
+            setFormValues({name: "",  email: "", password: "", password_confirmation: ""})
             handleClose();
         }catch(error) {
             console.error(error)
@@ -45,12 +50,12 @@ export default function Register({ setToken }) {
     const validate = (values) => {
         const errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!values.first_name) {
-            errors.first_name = "First Name is required"
-        }
-        if (!values.last_name) {
-            errors.last_name = "Last Name is required"
-        }
+        // if (!values.first_name) {
+        //     errors.first_name = "First Name is required"
+        // }
+        // if (!values.last_name) {
+        //     errors.last_name = "Last Name is required"
+        // }
         if (!values.email) {
             errors.email = "Email is required!";
         } else if (!regex.test(values.email)) {
@@ -60,12 +65,12 @@ export default function Register({ setToken }) {
             errors.password = "Password is required";
         } else if (values.password.length < 4) {
             errors.password = "Password must be more than 4 characters";
-        } else if (values.password !== values.password_confirmation) {
-            errors.password = "Password and Password Confirmation must same";
-            errors.password_confirmation = "Password and Password Confirmation must same"
-        }
-        if (!values.password_confirmation) {
-            errors.password_confirmation = "Password Confirmatioin is required"
+        // } else if (values.password !== values.password_confirmation) {
+        //     errors.password = "Password and Password Confirmation must same";
+        //     errors.password_confirmation = "Password and Password Confirmation must same"
+        // }
+        // if (!values.password_confirmation) {
+        //     errors.password_confirmation = "Password Confirmatioin is required"
         }
         return errors;
     };
@@ -95,7 +100,18 @@ export default function Register({ setToken }) {
                 </Modal.Header>
                 <Modal.Body>
                     <Form className='form__register' onSubmit={handleSubmit}>
-                        <Form.Group className="mb-3 position-relative" controlId="firstName" >
+                        <Form.Group className="mb-3 position-relative" controlId="name" >
+                            <Form.Control
+                                name='name'
+                                type="text"
+                                placeholder="Name"
+                                onChange={handleChange}
+                                value={formValues.name} 
+                            />
+                            <BsPerson className='icon' />
+                            <p className='text-danger'>{formErrors.name}</p>
+                        </Form.Group>
+                        {/* <Form.Group className="mb-3 position-relative" controlId="firstName" >
                             <Form.Control
                                 name='first_name'
                                 type="text"
@@ -117,7 +133,7 @@ export default function Register({ setToken }) {
                             />
                             <BsPerson className='icon' />
                             <p className='text-danger'>{formErrors.last_name}</p>
-                        </Form.Group>
+                        </Form.Group> */}
 
                         <Form.Group className="mb-3 position-relative" controlId="email">
                             <Form.Control
@@ -150,7 +166,7 @@ export default function Register({ setToken }) {
                             <p className='text-danger'>{formErrors.password}</p>
                         </Form.Group>
 
-                        <Form.Group className="mb-3 position-relative" controlId="passwordConfirmation">
+                        {/* <Form.Group className="mb-3 position-relative" controlId="passwordConfirmation">
                             <Form.Control
                                 name='password_confirmation'
                                 type={(showPwdCon === false) ? 'password' : 'text'}
@@ -167,7 +183,7 @@ export default function Register({ setToken }) {
                                 }
                             </div>
                             <p className='text-danger'>{formErrors.password_confirmation}</p>
-                        </Form.Group>
+                        </Form.Group> */}
 
                         <Button className='modal__button' variant="danger" type="submit" style={{ borderRadius: '2.5rem' }}>
                             Register

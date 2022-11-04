@@ -7,6 +7,9 @@ import Jumbotron from './Jumbotron';
 import Register from './Register';
 import Login from './Login';
 
+import { auth, logInWithEmailAndPassword, signInWithEmailAndPassword, signInWithGoogle, logout } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 export default function NavbarMovies({movies, jumbotron, nameLogin, image}) {
     const [query, setQuery] = useState('');
     const [alreadyLogin, setAlreadyLogin] = useState(false)
@@ -18,6 +21,7 @@ export default function NavbarMovies({movies, jumbotron, nameLogin, image}) {
 
     const logOut = (e) => {
         e.preventDefault();
+        logout();
         setAlreadyLogin(false);
         localStorage.removeItem("user");
         localStorage.removeItem("token");
@@ -57,10 +61,10 @@ export default function NavbarMovies({movies, jumbotron, nameLogin, image}) {
                             {
                                 (alreadyLogin) ? 
                                 <div className='d-flex align-items-center'>
-                                    <p className='text-white mx-3 '>{user.first_name || user.given_name}</p>
+                                    <p className='text-white mx-3 '>{user.displayName || user.email }</p>
                                     <img 
                                         className='rounded' 
-                                        src={user.image === 'undefined' ? image : user.image === null ? image : user.image  || user.picture} 
+                                        src={user.photoURL || image} 
                                         width="40" 
                                         height="40" 
                                         alt="profile"/>

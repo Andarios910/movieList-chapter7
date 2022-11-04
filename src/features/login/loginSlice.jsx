@@ -1,14 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { auth, logInWithEmailAndPassword, registerWithEmailAndPassword, signInWithEmailAndPassword, signInWithGoogle } from "../../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useSearchParams } from "react-router-dom";
 
 export const handleLogin = createAsyncThunk(
     'login/handleLogin',
     async(formValues) => {
         try {
-            const req = await axios.post('https://notflixtv.herokuapp.com/api/v1/users/login', formValues)
-            localStorage.setItem('token', req.data.data.token);
-            localStorage.setItem('user', JSON.stringify(req.data.data));
+            const req = await logInWithEmailAndPassword(formValues.email, formValues.password)
+            localStorage.setItem('token', JSON.stringify(req.user.accessToken))
+            localStorage.setItem('user', JSON.stringify(req.user))
             setTimeout(() => {
                 window.location.reload(1)
             }, 1500)
@@ -22,12 +25,16 @@ export const handleRegister = createAsyncThunk(
     'login/handleRegister',
     async(formValues) => {
         try {
-            const req = await axios.post('https://notflixtv.herokuapp.com/api/v1/users', formValues)
-            localStorage.setItem('token', req.data.data.token)
-            localStorage.setItem('user', JSON.stringify(req.data.data))
-            setTimeout(() => {
-                window.location.reload(1)
-            }, 1500)
+            const req = await registerWithEmailAndPassword(formValues.name, formValues.email, formValues.password)
+            localStorage.setItem('token', JSON.stringify(req.accessToken));
+            localStorage.setItem('user', JSON.stringify(req))
+            // console.log(req)
+            // const req = await axios.post('https://notflixtv.herokuapp.com/api/v1/users', formValues)
+            // localStorage.setItem('token', req.data.data.token)
+            // localStorage.setItem('user', JSON.stringify(req.data.data))
+            // setTimeout(() => {
+            //     window.location.reload(1)
+            // }, 1500)
         }catch(error) {
             console.error(error);
         }
@@ -36,15 +43,24 @@ export const handleRegister = createAsyncThunk(
 
 export const googleOauth = createAsyncThunk(
     'login/googleOauth',
-    async(credentialResponse) => {
-        localStorage.setItem('google_user', credentialResponse.credential);
-        const token = localStorage.getItem('google_user')
-        const decode = jwtDecode(token);
-        localStorage.setItem('user', JSON.stringify(decode));
+    async() => {
+        try {
+            const req = await signInWithGoogle();
+            localStorage.setItem('token', JSON.stringify(req.accessToken))
+            localStorage.setItem('user', JSON.stringify(req));
+        } catch(error) {
+            console.error(error);
+        }
+        
+        // localStorage.setItem('google_user', credentialResponse.credential);
+        // const token = localStorage.getItem('google_user')
+        // const decode = jwtDecode(token);
+        // localStorage.setItem('user', JSON.stringify(decode));
     }
 )
 
 const initialState = {
+    loginEP: null,
     status: false,
     statusG: false,
     isLoading: false,
@@ -60,7 +76,8 @@ export const loginSlice = createSlice({
         [handleLogin.pending]: (state) => {
             state.isLoading = true;
         },
-        [handleLogin.fulfilled]: (state) => {
+        [handleLogin.fulfilled]: (state, {payload}) => {
+            state.loginEP = payload
             state.status = true
         },
         [handleLogin.rejected]: (state) => {
@@ -69,7 +86,8 @@ export const loginSlice = createSlice({
         [handleRegister.fulfilled]: (state) => {
             state.status = true
         }, 
-        [googleOauth.fulfilled]: (state) => {
+        [googleOauth.fulfilled]: (state, {payload}) => {
+            state.loginEP = payload
             state.statusG = true
         }
 
